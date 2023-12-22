@@ -1,0 +1,17 @@
+transition_step,accept,cancel,complete,confirm-payment,decline,enquire,expire,request-payment,request-payment-after-enquiry,review-1-by-customer,review-1-by-provider,review-2-by-customer,review-2-by-provider
+customer | confirm-payment,111,30,236,5,49,0,8,0,0,43,27,49,54
+customer | enquire,30,11,127,2,14,1812,7,0,7,37,18,23,30
+customer | request-payment,81,43,253,3,93,0,31,12,0,69,47,66,67
+customer | request-payment-after-enquiry,30,11,127,2,14,0,6,0,7,37,18,23,30
+customer | review-1-by-customer,0,0,0,0,0,0,0,0,0,106,0,0,98
+customer | review-2-by-customer,0,0,0,0,0,0,0,0,0,0,0,90,0
+operator | cancel,0,11,0,0,1,0,0,0,0,0,0,0,0
+operator | decline,0,0,0,0,1,0,0,0,0,0,0,0,0
+provider | accept,111,48,378,0,4,0,0,0,0,106,64,90,98
+provider | decline,0,0,0,0,103,0,0,0,0,0,0,0,0
+provider | request-payment,0,1,0,0,0,0,3,14,1,0,0,1,1
+provider | review-1-by-provider,0,0,0,0,0,0,0,0,0,0,65,90,0
+provider | review-2-by-provider,0,0,0,0,0,0,0,0,0,0,0,0,98
+system | complete,0,0,377,0,1,0,0,0,0,106,65,90,98
+system | confirm-payment,0,20,143,0,58,0,32,0,0,63,38,41,44
+system | expire,0,0,0,0,0,0,40,0,0,0,0,0,0

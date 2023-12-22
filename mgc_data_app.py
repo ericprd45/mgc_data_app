@@ -6,11 +6,12 @@ import json
 import pickle
 import re
 import time
-import os.path
+import os
 from datetime import datetime, date, timedelta
 import matplotlib.pyplot as plt
 #from plotly.subplots import make_subplots
 import matplotlib.dates as mdates
+import plotly.express as px
 
 
 # from Project Workspace
@@ -38,21 +39,21 @@ st.sidebar.markdown('---')
 
 if navigation=='Transactions':
 
-    data = pd.read_csv("./data/api_transaction.csv")
-    st.dataframe(data)
+    data = pd.read_csv("C:/Users/eric_/Projects/mgc_data_app/data/api_transaction.csv")
 
+    frequence = st.selectbox(
+     "Sélectionner la fréquence d'analyse",
+     ('Jour', 'Semaine', 'Mois', 'Année'))
+
+    frequence_mapper = {'Jour':'d','Semaine':'w','Mois':'M','Année':'a'}
     data.lastTransitionedAt = pd.to_datetime(data.lastTransitionedAt)
     data['istransaction'] = data.lastTransition.apply(lambda x : map_transaction(x))
-    transac_by_date = data.groupby(pd.Grouper(key='lastTransitionedAt',freq='m')).sum()['istransaction']
-    transac_by_date = pd.DataFrame(transac_by_date).reset_index()
+    freq_transac = data.groupby(pd.Grouper(key='lastTransitionedAt',freq=frequence_mapper[frequence])).sum()['istransaction']
+    freq_transac = pd.DataFrame(freq_transac).reset_index()
+    #st.dataframe(freq_transac)
 
-    fig, ax = plt.subplots(constrained_layout=True)
-    locator = mdates.AutoDateLocator()
-    formatter = mdates.ConciseDateFormatter(locator)
-    #formatter = mdates.AutoDateFormatter(locator)
-    ax.xaxis.set_major_locator(locator)
-    ax.xaxis.set_major_formatter(formatter)
-
-    ax.bar(transac_by_date.lastTransitionedAt,transac_by_date.istransaction, width = 10)
-    ax.set_title('Transaction Per Month')
-    st.pyplot(fig)
+    fig = px.bar(freq_transac, x=freq_transac.lastTransitionedAt, y='istransaction')
+    fig.update_layout(title=f"Nombre de transaction par {frequence}", autosize=True,
+                  #width=800, height=400,
+                  margin=dict(l=40, r=40, b=40, t=40))
+    st.plotly_chart(fig)
